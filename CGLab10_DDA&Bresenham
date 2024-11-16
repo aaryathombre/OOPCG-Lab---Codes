@@ -1,0 +1,95 @@
+/*
+EXPERIMENT NO.: 10
+TITLE : 
+Write a C++ program to draw the following pattern. Use DDA line andBresenham’s circle drawing algorithm. Apply the concept of encapsulation.
+*/
+
+#include <iostream>
+#include <graphics.h>
+#include <math.h>
+using namespace std;
+
+class DDA {
+public:
+    void draw_line(int x1, int y1, int x2, int y2);
+};
+
+void DDA::draw_line(int x1, int y1, int x2, int y2) {
+    int dx, dy, i, length;
+    float xi, yi, x, y;
+    dx = (x2 - x1);
+    dy = (y2 - y1);
+
+    if (abs(dx) >= abs(dy)) {
+        length = abs(dx);
+    } else {
+        length = abs(dy);
+    }
+
+    xi = (float)dx / length;
+    yi = (float)dy / length;
+    x = x1 + 0.5;
+    y = y1 + 0.5;
+
+    for (i = 1; i <= length; i++) {
+        putpixel(int(x), int(y), BLUE);
+        x = x + xi;
+        y = y + yi;
+    }
+}
+
+class BRESENHAM {
+public:
+    void draw_circle(int xc, int yc, int rad);
+};
+
+void BRESENHAM::draw_circle(int xc, int yc, int rad) {
+    int x, y, s, r;
+    r = rad;
+    x = 0;
+    y = r;
+    s = 3 - 2 * r;
+
+    while (x <= y) {
+        if (s <= 0) {
+            s = s + 4 * x + 6;
+            x++;
+        } else {
+            s = s + 4 * (x - y) + 10;
+            x++;
+            y--;
+        }
+
+        // Plot the 8 symmetrical points
+        putpixel(x + xc, y + yc, RED);
+        putpixel(-x + xc, y + yc, RED);
+        putpixel(x + xc, -y + yc, RED);
+        putpixel(-x + xc, -y + yc, RED);
+        putpixel(y + xc, x + yc, RED);
+        putpixel(-y + xc, x + yc, RED);
+        putpixel(y + xc, -x + yc, RED);
+        putpixel(-y + xc, -x + yc, RED);
+    }
+}
+
+int main() {
+    int gd = DETECT, gm;
+    initgraph(&gd, &gm, "NULL"); // Initialize graphics
+    setbkcolor(WHITE);
+
+    BRESENHAM c;
+    DDA l;
+
+    // Draw circles
+    c.draw_circle(210, 240, 68);
+    c.draw_circle(210, 240, 138);
+
+    // Draw lines
+    l.draw_line(87, 310, 333, 310);
+    l.draw_line(87, 310, 210, 110);
+    l.draw_line(210, 110, 333, 310);
+
+    getch();
+    closegraph();
+    return 0;
+}
