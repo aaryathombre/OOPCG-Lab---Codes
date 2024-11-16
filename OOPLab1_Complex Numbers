@@ -1,0 +1,117 @@
+/* 
+NAME: Aarya Atul Thombre 
+CLASS: S.E. 
+BRANCH: Computer 
+BATCH: S4 
+EXPERIMENT NO.:1 
+TOPIC: 
+Implement a class Complex which represents the Complex Number data type. Implement the following 
+1. Constructor (including a default constructor which creates the complex number 0+0i). 2. Overload operator+ to add two complex numbers. 
+3. Overload operator* to multiply two complex numbers. 
+4. Overload operators << and >> to print and read Complex Numbers.*/ 
+
+#include <iostream> 
+using namespace std; 
+
+class complex { 
+public: 
+    int real; 
+    int img; 
+
+    // Default constructor
+    complex() { 
+        real = 0; 
+        img = 0; 
+    } 
+
+    // Overloaded + operator
+    complex operator+(complex c);
+    // Overloaded - operator
+    complex operator-(complex c);
+    // Overloaded * operator
+    complex operator*(complex c); 
+    // Friend function for overloading >> operator
+    friend istream &operator>>(istream &in, complex &c); 
+    // Friend function for overloading << operator
+    friend ostream &operator<<(ostream &out, complex &c); 
+}; 
+
+// Overloading + operator
+complex complex::operator+(complex c) { 
+    complex temp;
+    temp.real = real + c.real; 
+    temp.img = img + c.img; 
+    return temp; 
+} 
+
+complex complex::operator-(complex c) { 
+    complex temp;
+    temp.real = real - c.real; 
+    temp.img = img - c.img; 
+    return temp; 
+}
+
+
+// Overloading * operator
+complex complex::operator*(complex c) { 
+    complex temp;
+    temp.real = real * c.real - img * c.img; 
+    temp.img = real * c.img + img * c.real; 
+    return temp; 
+}
+
+// Overloading >> operator
+istream &operator>>(istream &in, complex &c) { 
+    cout << "Enter real part: "; 
+    in >> c.real; 
+    cout << "Enter imaginary part: "; 
+    in >> c.img; 
+    return in; 
+} 
+
+// Overloading << operator
+ostream &operator<<(ostream &out, complex &c) { 
+    out << c.real << " + i" << c.img << endl; 
+    return out; 
+} 
+
+int main() { 
+    complex c1, c2, c3, c4; 
+
+    // Taking input for complex numbers
+    cin >> c1; 
+    cout << "c1 = " << c1; 
+    cin >> c2; 
+    cout << "c2 = " << c2; 
+
+    // Performing addition
+    cout << "Addition: "; 
+    c3 = c1 + c2; 
+    cout << "c3 = " << c3; 
+
+    // Performing subtraction
+    cout << "Subtraction: "; 
+    c4 = c1 - c2; 
+    cout << "c4 = " << c4; 
+
+    // Performing multiplication
+    cout << "Multiplication: "; 
+    c4 = c1 * c2; 
+    cout << "c4 = " << c4; 
+
+    return 0; 
+}
+
+
+/*
+OUTPUT:
+Enter real part: 2
+Enter imaginary part: 3
+c1 = 2 + i3
+Enter real part: 2
+Enter imaginary part: 3
+c2 = 2 + i3
+Addition: c3 = 4 + i6
+Subtraction: c4 = 0 + i0
+Multiplication: c4 = -5 + i12
+*/
