@@ -1,0 +1,114 @@
+/*EXPERIMENT.NO:4
+TITLE:
+Write a function template for selection sort that inputs, sorts and outputs an integer array and 
+a float array*/
+#include<iostream>
+using namespace std;
+int n;
+#define size 10
+template <class T>
+void selection_sort(T arr[size]){
+    int i,j,min;
+    T temp ; 
+    for (i = 0 ; i < (n-1) ; i++){
+        min = i;
+        for (j = i+1 ; j < n ; j++){
+            if (arr[j] < arr[min]){
+                min = j;
+            }
+        }
+        if (min != i){    
+            temp = arr[i];
+            arr[i] = arr[min];
+            arr[min] = temp;
+        }
+    }
+    
+    for (i = 0 ; i < n ; i++){
+        cout<<arr[i]<<"\t"<<endl;
+    }
+}
+
+int main(){
+    int choice;
+    int A[size];
+    float B[size];
+    int i;
+     
+    do{
+        cout<<"1.Integer\n2.Float\n3.Exit\nSelect datatype: ";
+        cin>>choice;
+        
+        switch(choice){
+            case 1: {
+                cout<<"Enter the no of integer elements to be sorted: "<<endl;
+                cin>>n;
+                for (i = 0 ; i < n ; i++){
+                    cout<<"Enter element no. "<<i<<": ";
+                    cin>>A[i];
+                }
+                selection_sort(A);
+                break;
+            }
+            case 2: {
+                cout<<"Enter the no. of float elements to be sorted: ";
+                cin>>n;
+                for (i = 0 ; i < n ; i++){
+                    cout<<"Enter element no. "<<i<<": ";
+                    cin>>B[i];
+                }
+                selection_sort(B);
+                break;
+            }
+            
+            default : {
+                cout<<"Program executed successfully";
+            }
+            
+        }
+    }while(choice!=3) ;
+    
+    
+    return 0 ;
+}
+
+
+/*
+OUTPUT:
+1.Integer
+2.Float
+3.Exit
+Select datatype: 1
+Enter the no of integer elements to be sorted: 
+5
+Enter element no. 0: 82
+Enter element no. 1: 46
+Enter element no. 2: 25
+Enter element no. 3: 18
+Enter element no. 4: 74
+18
+25
+46
+74
+82
+1.Integer
+2.Float
+3.Exit
+Select datatype: 2
+Enter the no. of float elements to be sorted: 5
+Enter element no. 0: 26
+Enter element no. 1: 95
+Enter element no. 2: 71
+Enter element no. 3: 42
+Enter element no. 4: 22
+22
+26
+42
+71
+95
+1.Integer
+2.Float
+3.Exit
+Select datatype: 3
+Program executed successfully
+*/
