@@ -1,0 +1,110 @@
+/*
+EXPERIMENT NO. : 6
+TITLE :
+Write C++ program using STL for sorting and searching user defined records such as Item records (Item code, name, cost, quantity etc.) using vector container
+*/
+
+#include <iostream>
+#include <vector>
+#include <algorithm>
+using namespace std;
+
+// Class to store item records
+class ItemRecord {
+public:
+    int itemCode;
+    string itemName;
+    float cost;
+    int quantity;
+
+    // Constructor
+    ItemRecord(int code, string name, float c, int qty) : itemCode(code), itemName(name), cost(c), quantity(qty) {}
+
+    // Function to display the record
+    void display() const {
+        cout << "Item Code: " << itemCode << ", Name: " << itemName << ", Cost: $" << cost << ", Quantity: " << quantity << endl;
+    }
+
+    // Function to compare two records by item name for sorting
+    bool operator<(const ItemRecord &record) const {
+        return itemName < record.itemName;
+    }
+};
+
+// Function to search for an item record by item code
+void searchRecord(const vector<ItemRecord> &records, int code) {
+    bool found = false;
+    for (const auto &record : records) {
+        if (record.itemCode == code) {
+            cout << "Item found: ";
+            record.display();
+            found = true;
+            break;
+        }
+    }
+    if (!found) {
+        cout << "Item with code " << code << " not found." << endl;
+    }
+}
+
+int main() {
+    vector<ItemRecord> records;
+    int choice;
+    int itemCode;
+    string itemName;
+    float cost;
+    int quantity;
+
+    do {
+        cout << "1. Add Item\n2. Display All Items\n3. Sort Items by Name\n4. Search Item by Code\n5. Exit\nEnter your choice: ";
+        cin >> choice;
+
+        switch (choice) {
+        case 1:
+            // Add a new item
+            cout << "Enter item code: ";
+            cin >> itemCode;
+            cout << "Enter item name: ";
+            cin.ignore(); // To clear the input buffer
+            getline(cin, itemName);
+            cout << "Enter cost: ";
+            cin >> cost;
+            cout << "Enter quantity: ";
+            cin >> quantity;
+            records.push_back(ItemRecord(itemCode, itemName, cost, quantity));
+            break;
+
+        case 2:
+            // Display all items
+            cout << "Item Records:" << endl;
+            for (const auto &record : records) {
+                record.display();
+            }
+            break;
+
+        case 3:
+            // Sort items by name
+            sort(records.begin(), records.end());
+            cout << "Items sorted by name." << endl;
+            break;
+
+        case 4:
+            // Search for an item by item code
+            cout << "Enter item code to search: ";
+            cin >> itemCode;
+            searchRecord(records, itemCode);
+            break;
+
+        case 5:
+            // Exit the program
+            cout << "Program exited successfully." << endl;
+            break;
+
+        default:
+            cout << "Invalid choice! Please try again." << endl;
+            break;
+        }
+    } while (choice != 5);
+
+    return 0;
+}
