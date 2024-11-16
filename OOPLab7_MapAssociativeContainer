@@ -1,0 +1,50 @@
+/*
+EXPERIMENT NO.6:
+TITLE :
+Write a program in C++ to use map associative container. The keys will be the names of states 
+and the values will be the populations of the states. When the program runs, the user is 
+prompted to type the name of a state. The program then looks in the map, using the state 
+name as an index and returns the population of the state.
+*/
+
+#include<iostream>
+#include<map>
+#include<string>
+using namespace std;
+
+int main(){
+    
+    map<string,int> populationMap;
+    populationMap.insert(pair<string,int>("Maharashtra",1000000));
+    populationMap.insert(pair<string,int>("Punjab",1000000));
+    populationMap.insert(pair<string,int>("Gujrat",1000000));
+    populationMap.insert(pair<string,int>("Karanataka",1000000));
+    populationMap.insert(pair<string,int>("West Bangal",1000000));
+    map<string,int> :: iterator itr;
+    string state_name;
+    cout<<"Population of states of India!"<<endl;
+    cout<<"ENter the state: ";
+    cin>>state_name;
+     
+    itr = populationMap.find(state_name);
+     
+    if(itr != populationMap.end()){
+        cout<<"Population of "<<state_name<<"is "<<itr->second;
+    }
+    else{
+        cout<<"State not in PopulationMap";
+    } 
+    populationMap.clear();
+    
+}
+
+/*
+OUTPUT:
+Population of states of India!
+ENter the state: Goa
+State not in PopulationMap
+
+Population of states of India!
+ENter the state: Maharashtra
+Population of Maharashtrais 1000000
+*/
