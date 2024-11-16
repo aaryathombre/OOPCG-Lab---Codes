@@ -2,8 +2,6 @@
 EXPERIMENT NO. : 12
 TITLE : 
 a) Write C++ program to generate snowflake using concept of fractals.  
-b)Write C++ program to generate Hilbert curve using concept of fractals.
-c) Write C++ program to generate fractal patterns by using Koch curves.
 */
 
 // Snowflake
