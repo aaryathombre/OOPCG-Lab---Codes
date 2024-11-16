@@ -1,0 +1,36 @@
+/*EXPERIMENT.NO:4
+TITLE:
+Write a C++ program that creates an output file, writes information to it, closes the file, open 
+it again as an input file and read the information from the file.
+*/
+#include<iostream>
+#include<fstream>
+using namespace std;
+
+int main(){
+    
+    char data[200];
+    fstream file;
+    file.open("oop_prac5.txt",ios::out | ios::in);
+    cout<<"Write text to be written on file"<<endl;
+    cin.getline(data,sizeof(data));
+    
+    //writing on file
+    file<<data<<endl;
+    
+    //reading from file
+    file>>data ;
+    cout<<data<<endl;
+    
+    //closing the file
+    file.close();
+    
+    return 0;
+}
+
+/*
+OUTPUT:
+Write text to be written on file
+Hey! I am a Student from SE Comp Engineering 
+Hey! I am a Student from SE Comp Engineering 
+/*
