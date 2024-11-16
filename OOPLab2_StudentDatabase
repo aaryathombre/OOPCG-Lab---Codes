@@ -1,0 +1,181 @@
+/*
+EXPERIMENT.NO:2
+TITLE: Develop a program in C++ to create a database of student’s information system containing the following information: Name, Roll number, Class, Division, Date of Birth, Blood group, Contact address, 
+Telephone number, Driving license no. and other. Construct the database with suitable member functions. Make use of constructor, default constructor, copy constructor, destructor, static member functions, 
+friend class, this pointer, inline code and dynamic memory allocation operators-new and delete as well as exception handling. 
+*/
+
+#include <iostream>
+#include <cstring>
+using namespace std;
+
+// Student class definition
+class student {
+private:
+    string name;
+    int roll;
+    string standard;
+    char division;
+    string dob;
+    string bg;
+    static int count; // Static data member
+    string* address;  // Using dynamic memory allocation for address
+    double phone;
+    double license_no;
+    double aadhar;
+
+public:
+    // Default constructor
+    student() {
+        address = new string; // Dynamic memory allocation
+        try {
+            cout << "Enter your name: ";
+            cin.ignore();
+            getline(cin, name);
+            cout << "Enter your roll number: ";
+            cin >> roll;
+            cout << "Which standard are you in? ";
+            cin >> standard;
+            cout << "Which division do you belong to? ";
+            cin >> division;
+            cout << "Enter your date of birth (DDMMYYYY): ";
+            cin >> dob;
+            cout << "What's your blood group? ";
+            cin >> bg;
+            ++count;
+        } catch (exception& e) {
+            cout << "Error: " << e.what() << endl;
+        }
+    }
+
+    // Parameterized constructor
+    student(string name, int roll_no, string standard, char division, string dob, string bg) {
+        this->name = name; // Using `this` pointer
+        roll = roll_no;
+        this->standard = standard;
+        this->division = division;
+        this->dob = dob;
+        this->bg = bg;
+        address = new string; // Dynamic memory allocation
+        ++count;
+    }
+
+    // Copy constructor
+    student(const student& s) {
+        name = s.name;
+        roll = s.roll;
+        standard = s.standard;
+        division = s.division;
+        dob = s.dob;
+        bg = s.bg;
+        address = new string(*s.address); // Deep copy using dynamic memory allocation
+        phone = s.phone;
+        license_no = s.license_no;
+        aadhar = s.aadhar;
+        ++count;
+    }
+
+    // Destructor
+    ~student() {
+        delete address; // Releasing allocated memory
+        --count;
+        cout << "Destructor called for " << name << endl;
+    }
+
+    // Function to display student data
+    inline void display() const { // Inline function
+        cout << "\nName: " << name
+             << "\nClass: " << standard
+             << "\nDivision: " << division
+             << "\nRoll number: " << roll
+             << "\nDate of birth: " << dob
+             << "\nBlood group: " << bg << endl;
+    }
+
+    // Static member function
+    static void showcount() {
+        cout << "Total number of students: " << count << endl;
+    }
+
+    // Friend class declaration
+    friend class data;
+};
+
+// Initializing static data member
+int student::count = 0;
+
+// Friend class definition
+class data {
+public:
+    void getdata(student& s) {
+        try {
+            cout << "Enter your address: ";
+            cin.ignore();
+            getline(cin, *s.address);
+            cout << "Enter your phone number: ";
+            cin >> s.phone;
+            cout << "Enter your driving license number: ";
+            cin >> s.license_no;
+            cout << "Enter your aadhar number: ";
+            cin >> s.aadhar;
+        } catch (exception& e) {
+            cout << "Error: " << e.what() << endl;
+        }
+    }
+
+    void putdata(const student& s) {
+        cout << "Address: " << *s.address << endl;
+        cout << "Phone: " << s.phone << endl;
+        cout << "Driving license number: " << s.license_no << endl;
+        cout << "Aadhar number: " << s.aadhar << endl;
+    }
+};
+
+// Main function
+int main() {
+    student s1; // Default constructor
+    student s2("Aarya Thombre", 66, "SE", 'A', "18/05/2004", "O+ve"); // Parameterized constructor
+    student s3(s2); // Copy constructor
+
+    s1.display();
+    s2.display();
+    s3.display();
+
+    return 0;
+}
+
+/*
+OUTPUT : 
+Enter your name: A
+Enter your roll number: 2
+Which standard are you in? 4
+Which division do you belong to? A
+Enter your date of birth (DDMMYYYY): 12031999
+What's your blood group? O
+
+Name: 
+Class: 4
+Division: A
+Roll number: 2
+Date of birth: 12031999
+Blood group: O
+
+Name: Aarya Thombre
+Class: SE
+Division: A
+Roll number: 66
+Date of birth: 18/05/2004
+Blood group: O+ve
+
+Name: Aarya Thombre
+Class: SE
+Division: A
+Roll number: 66
+Date of birth: 18/05/2004
+Blood group: O+ve
+
+Destructor called for Aarya Thombre
+Destructor called for Aarya Thombre
+Destructor called for 
+
+*/
